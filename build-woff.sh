@@ -46,6 +46,19 @@ BOLDITALIC_TTF="Hack-BoldItalic.ttf"
 BOLDITALIC_PRE="Hack-BoldItalic.woff"
 BOLDITALIC_WOFF="hack-bolditalic.woff"
 
+DZSI_REGULAR_TTF="Hack-DZSI-Regular.ttf"
+DZSI_REGULAR_PRE="Hack-DZSI-Regular.woff"
+DZSI_REGULAR_WOFF="hack-dzsi-regular.woff"
+DZSI_BOLD_TTF="Hack-DZSI-Bold.ttf"
+DZSI_BOLD_PRE="Hack-DZSI-Bold.woff"
+DZSI_BOLD_WOFF="hack-dzsi-bold.woff"
+DZSI_ITALIC_TTF="Hack-DZSI-Italic.ttf"
+DZSI_ITALIC_PRE="Hack-DZSI-Italic.woff"
+DZSI_ITALIC_WOFF="hack-dzsi-italic.woff"
+DZSI_BOLDITALIC_TTF="Hack-DZSI-BoldItalic.ttf"
+DZSI_BOLDITALIC_PRE="Hack-DZSI-BoldItalic.woff"
+DZSI_BOLDITALIC_WOFF="hack-dzsi-bolditalic.woff"
+
 # test for number of arguments
 if [ $# -gt 1 ]
 	then
@@ -122,7 +135,7 @@ fi
 
 # italic set
 if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$ITALIC_TTF"; then
-	echo "Failed to build $BOLD_WOFF from $ITALIC_TTF" 1>&2
+	echo "Failed to build $ITALIC_WOFF from $ITALIC_TTF" 1>&2
 	exit 1
 else
 	echo "Italic woff set successfully built from $ITALIC_TTF"
@@ -134,6 +147,39 @@ if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$BOLDITALIC_TTF"; then
 	exit 1
 else
 	echo "Bold Italic woff set successfully built from $BOLDITALIC_TTF"
+fi
+
+# DZSI variants
+# regular set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_REGULAR_TTF"; then
+	echo "Failed to build $DZSI_REGULAR_WOFF from $DZSI_REGULAR_TTF." 1>&2
+	exit 1
+else
+	echo "DZSI Regular woff set successfully built from $DZSI_REGULAR_TTF"
+fi
+
+# bold set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_BOLD_TTF"; then
+	echo "Failed to build $DZSI_BOLD_WOFF from $DZSI_BOLD_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Bold woff set successfully built from $DZSI_BOLD_TTF"
+fi
+
+# italic set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_ITALIC_TTF"; then
+	echo "Failed to build $DZSI_ITALIC_WOFF from $DZSI_ITALIC_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Italic woff set successfully built from $DZSI_ITALIC_TTF"
+fi
+
+# bold italic set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_BOLDITALIC_TTF"; then
+	echo "Failed to build $DZSI_BOLDITALIC_WOFF from $DZSI_BOLDITALIC_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Bold Italic woff set successfully built from $DZSI_BOLDITALIC_TTF"
 fi
 
 echo "Moving woff files to build directory..."
@@ -149,6 +195,11 @@ mv "$TTF_BUILD/$REGULAR_PRE" "$WOFF_BUILD/$REGULAR_WOFF"
 mv "$TTF_BUILD/$BOLD_PRE" "$WOFF_BUILD/$BOLD_WOFF"
 mv "$TTF_BUILD/$ITALIC_PRE" "$WOFF_BUILD/$ITALIC_WOFF"
 mv "$TTF_BUILD/$BOLDITALIC_PRE" "$WOFF_BUILD/$BOLDITALIC_WOFF"
+
+mv "$TTF_BUILD/$DZSI_REGULAR_PRE" "$WOFF_BUILD/$DZSI_REGULAR_WOFF"
+mv "$TTF_BUILD/$DZSI_BOLD_PRE" "$WOFF_BUILD/$DZSI_BOLD_WOFF"
+mv "$TTF_BUILD/$DZSI_ITALIC_PRE" "$WOFF_BUILD/$DZSI_ITALIC_WOFF"
+mv "$TTF_BUILD/$DZSI_BOLDITALIC_PRE" "$WOFF_BUILD/$DZSI_BOLDITALIC_WOFF"
 
 echo " "
 
@@ -168,6 +219,21 @@ if [ -f "$WOFF_BUILD/$BOLDITALIC_WOFF" ]; then
 	echo "Bold Italic woff build path: $WOFF_BUILD/$BOLDITALIC_WOFF"
 fi
 
+if [ -f "$WOFF_BUILD/$DZSI_REGULAR_WOFF" ]; then
+	echo "DZSI Regular woff build path: $WOFF_BUILD/$DZSI_REGULAR_WOFF"
+fi
+
+if [ -f "$WOFF_BUILD/$DZSI_BOLD_WOFF" ]; then
+	echo "DZSI Bold woff build path: $WOFF_BUILD/$DZSI_BOLD_WOFF"
+fi
+
+if [ -f "$WOFF_BUILD/$DZSI_ITALIC_WOFF" ]; then
+	echo "DZSI Italic woff build path: $WOFF_BUILD/$DZSI_ITALIC_WOFF"
+fi
+
+if [ -f "$WOFF_BUILD/$DZSI_BOLDITALIC_WOFF" ]; then
+	echo "DZSI Bold Italic woff build path: $WOFF_BUILD/$DZSI_BOLDITALIC_WOFF"
+fi
 
 
 

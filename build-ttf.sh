@@ -102,6 +102,8 @@ if [ -f "build/ttf/Hack-BoldItalic.ttf" ]; then
 	rm build/ttf/Hack-BoldItalic.ttf
 fi
 
+rm -f "build/ttf/Hack-DZSI-Regular.ttf" "build/ttf/Hack-DZSI-Italic.ttf" "build/ttf/Hack-DZSI-Bold.ttf" "build/ttf/Hack-DZSI-BoldItalic.ttf"
+
 # remove master_ttf directory if a previous build failed + exited early and it was not cleaned up
 
 if [ -d "master_ttf" ]; then
@@ -137,6 +139,15 @@ if ! fontmake -u "source/Hack-BoldItalic.ufo" -o ttf
 	    echo "Unable to build the Hack-BoldItalic variant set.  Build canceled." 1>&2
 	    exit 1
 fi
+
+for font in "Hack-DZSI-Regular" "Hack-DZSI-Italic" "Hack-DZSI-Bold" "Hack-DZSI-BoldItalic"
+do
+	if ! fontmake -u "source/${font}.ufo" -o ttf
+		then
+		    echo "Unable to build the ${font} variant set.  Build canceled." 1>&2
+		    exit 1
+	fi
+done
 
 # Desktop ttf font post build fixes
 
@@ -199,6 +210,41 @@ if ! "$TTFAH" -l 6 -r 50 -x 10 -H 265 -D latn -f latn -a qsq -W -t -X "" -I -m "
 	    exit 1
 fi
 echo "master_ttf/Hack-BoldItalic.ttf - successful hinting with ttfautohint"
+
+
+# Hack-DZSI-Regular.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 181 -D latn -f latn -a qsq -W -t -X "" -I -m "postbuild_processing/tt-hinting/Hack-DZSI-Regular-TA.txt" "master_ttf/Hack-DZSI-Regular.ttf" "master_ttf/hinted/Hack-DZSI-Regular.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-Regular variant set.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-Regular.ttf - successful hinting with ttfautohint"
+
+# Hack-DZSI-Bold.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 260 -D latn -f latn -a qsq -W -t -X "" -I -m "postbuild_processing/tt-hinting/Hack-DZSI-Bold-TA.txt" "master_ttf/Hack-DZSI-Bold.ttf" "master_ttf/hinted/Hack-DZSI-Bold.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-Bold variant set.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-Bold.ttf - successful hinting with ttfautohint"
+
+# Hack-DZSI-Italic.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 145 -D latn -f latn -a qsq -W -t -X "" -I -m "postbuild_processing/tt-hinting/Hack-DZSI-Italic-TA.txt" "master_ttf/Hack-DZSI-Italic.ttf" "master_ttf/hinted/Hack-DZSI-Italic.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-Italic variant set.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-Italic.ttf - successful hinting with ttfautohint"
+
+# Hack-DZSI-BoldItalic.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 265 -D latn -f latn -a qsq -W -t -X "" -I -m "postbuild_processing/tt-hinting/Hack-DZSI-BoldItalic-TA.txt" "master_ttf/Hack-DZSI-BoldItalic.ttf" "master_ttf/hinted/Hack-DZSI-BoldItalic.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-BoldItalic variant set.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-BoldItalic.ttf - successful hinting with ttfautohint"
+
+
 echo " "
 
 # Move release files to build directory
@@ -218,6 +264,15 @@ mv master_ttf/hinted/Hack-Bold.ttf build/ttf/Hack-Bold.ttf
 echo "Bold ttf build path: build/ttf/Hack-Bold.ttf"
 mv master_ttf/hinted/Hack-BoldItalic.ttf build/ttf/Hack-BoldItalic.ttf
 echo "Bold Italic ttf build path: build/ttf/Hack-BoldItalic.ttf"
+
+mv master_ttf/hinted/Hack-DZSI-Regular.ttf build/ttf/Hack-DZSI-Regular.ttf
+echo "DZSI Regular ttf build path: build/ttf/Hack-DZSI-Regular.ttf"
+mv master_ttf/hinted/Hack-DZSI-Italic.ttf build/ttf/Hack-DZSI-Italic.ttf
+echo "DZSI Italic ttf build path: build/ttf/Hack-DZSI-Italic.ttf"
+mv master_ttf/hinted/Hack-DZSI-Bold.ttf build/ttf/Hack-DZSI-Bold.ttf
+echo "DZSI Bold ttf build path: build/ttf/Hack-DZSI-Bold.ttf"
+mv master_ttf/hinted/Hack-DZSI-BoldItalic.ttf build/ttf/Hack-DZSI-BoldItalic.ttf
+echo "DZSI Bold Italic ttf build path: build/ttf/Hack-DZSI-BoldItalic.ttf"
 
 # Remove master_ttf directory
 rm -rf master_ttf

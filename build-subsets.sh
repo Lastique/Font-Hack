@@ -75,6 +75,30 @@ BOLDITALIC_WOFF="hack-bolditalic-subset.woff"
 BOLDITALIC_WOFF2_PRE="Hack-BoldItalic.woff2"
 BOLDITALIC_WOFF2="hack-bolditalic-subset.woff2"
 
+DZSI_REGULAR_TTF="Hack-DZSI-Regular.ttf"
+DZSI_REGULAR_WOFF_PRE="Hack-DZSI-Regular.woff"
+DZSI_REGULAR_WOFF="hack-dzsi-regular-subset.woff"
+DZSI_REGULAR_WOFF2_PRE="Hack-DZSI-Regular.woff2"
+DZSI_REGULAR_WOFF2="hack-dzsi-regular-subset.woff2"
+
+DZSI_BOLD_TTF="Hack-DZSI-Bold.ttf"
+DZSI_BOLD_WOFF_PRE="Hack-DZSI-Bold.woff"
+DZSI_BOLD_WOFF="hack-dzsi-bold-subset.woff"
+DZSI_BOLD_WOFF2_PRE="Hack-DZSI-Bold.woff2"
+DZSI_BOLD_WOFF2="hack-dzsi-bold-subset.woff2"
+
+DZSI_ITALIC_TTF="Hack-DZSI-Italic.ttf"
+DZSI_ITALIC_WOFF_PRE="Hack-DZSI-Italic.woff"
+DZSI_ITALIC_WOFF="hack-dzsi-italic-subset.woff"
+DZSI_ITALIC_WOFF2_PRE="Hack-DZSI-Italic.woff2"
+DZSI_ITALIC_WOFF2="hack-dzsi-italic-subset.woff2"
+
+DZSI_BOLDITALIC_TTF="Hack-DZSI-BoldItalic.ttf"
+DZSI_BOLDITALIC_WOFF_PRE="Hack-DZSI-BoldItalic.woff"
+DZSI_BOLDITALIC_WOFF="hack-dzsi-bolditalic-subset.woff"
+DZSI_BOLDITALIC_WOFF2_PRE="Hack-DZSI-BoldItalic.woff2"
+DZSI_BOLDITALIC_WOFF2="hack-dzsi-bolditalic-subset.woff2"
+
 # release directory path for web fonts
 WEB_BUILD="build/web/fonts"
 
@@ -192,11 +216,21 @@ cp -r source/Hack-Italic.ufo $TEMP_SOURCE/Hack-Italic.ufo
 cp -r source/Hack-Bold.ufo $TEMP_SOURCE/Hack-Bold.ufo
 cp -r source/Hack-BoldItalic.ufo $TEMP_SOURCE/Hack-BoldItalic.ufo
 
+cp -r source/Hack-DZSI-Regular.ufo $TEMP_SOURCE/Hack-DZSI-Regular.ufo
+cp -r source/Hack-DZSI-Italic.ufo $TEMP_SOURCE/Hack-DZSI-Italic.ufo
+cp -r source/Hack-DZSI-Bold.ufo $TEMP_SOURCE/Hack-DZSI-Bold.ufo
+cp -r source/Hack-DZSI-BoldItalic.ufo $TEMP_SOURCE/Hack-DZSI-BoldItalic.ufo
+
 # copy lib.plist files with subset definitions to temporary source directories
 cp source/subset-lib/lib-regular.plist $TEMP_SOURCE/Hack-Regular.ufo/lib.plist
 cp source/subset-lib/lib-italic.plist $TEMP_SOURCE/Hack-Italic.ufo/lib.plist
 cp source/subset-lib/lib-bold.plist $TEMP_SOURCE/Hack-Bold.ufo/lib.plist
 cp source/subset-lib/lib-bolditalic.plist $TEMP_SOURCE/Hack-BoldItalic.ufo/lib.plist
+
+cp source/subset-lib/lib-regular.plist $TEMP_SOURCE/Hack-DZSI-Regular.ufo/lib.plist
+cp source/subset-lib/lib-italic.plist $TEMP_SOURCE/Hack-DZSI-Italic.ufo/lib.plist
+cp source/subset-lib/lib-bold.plist $TEMP_SOURCE/Hack-DZSI-Bold.ufo/lib.plist
+cp source/subset-lib/lib-bolditalic.plist $TEMP_SOURCE/Hack-DZSI-BoldItalic.ufo/lib.plist
 
 # /////////////////////////////////////////////
 #
@@ -243,6 +277,15 @@ if ! fontmake --subset -u "$TEMP_SOURCE/Hack-BoldItalic.ufo" -o ttf
 	    echo "Unable to build the Hack-BoldItalic variant subset.  Build canceled." 1>&2
 	    exit 1
 fi
+
+for font in "Hack-DZSI-Regular" "Hack-DZSI-Italic" "Hack-DZSI-Bold" "Hack-DZSI-BoldItalic"
+do
+	if ! fontmake --subset  -u "$TEMP_SOURCE/${font}.ufo" -o ttf
+		then
+		    echo "Unable to build the ${font} variant set.  Build canceled." 1>&2
+		    exit 1
+	fi
+done
 
 
 # /////////////////////////////////////////////
@@ -318,6 +361,39 @@ if ! "$TTFAH" -l 6 -r 50 -x 10 -H 265 -D latn -f latn -a qsq -W -t -X "" -I -R "
 	    exit 1
 fi
 echo "master_ttf/Hack-BoldItalic.ttf subset - successful hinting with ttfautohint"
+
+# Hack-DZSI-Regular.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 181 -D latn -f latn -a qsq -W -t -X "" -I -R "master_ttf/Hack-DZSI-Regular.ttf" -m "postbuild_processing/tt-hinting/Hack-DZSI-Regular-TA.txt" "master_ttf/Hack-DZSI-Regular.ttf" "master_ttf/hinted/Hack-DZSI-Regular.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-Regular variant subset.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-Regular.ttf subset - successful hinting with ttfautohint"
+
+# Hack-DZSI-Bold.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 260 -D latn -f latn -a qsq -W -t -X "" -I -R "master_ttf/Hack-DZSI-Regular.ttf" -m "postbuild_processing/tt-hinting/Hack-DZSI-Bold-TA.txt" "master_ttf/Hack-DZSI-Bold.ttf" "master_ttf/hinted/Hack-DZSI-Bold.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-Bold variant subset.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-Bold.ttf subset - successful hinting with ttfautohint"
+
+# Hack-DZSI-Italic.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 145 -D latn -f latn -a qsq -W -t -X "" -I -R "master_ttf/Hack-DZSI-Regular.ttf" -m "postbuild_processing/tt-hinting/Hack-DZSI-Italic-TA.txt" "master_ttf/Hack-DZSI-Italic.ttf" "master_ttf/hinted/Hack-DZSI-Italic.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-Italic variant subset.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-Italic.ttf subset - successful hinting with ttfautohint"
+
+# Hack-DZSI-BoldItalic.ttf
+if ! "$TTFAH" -l 6 -r 50 -x 10 -H 265 -D latn -f latn -a qsq -W -t -X "" -I -R "master_ttf/Hack-DZSI-Regular.ttf" -m "postbuild_processing/tt-hinting/Hack-DZSI-BoldItalic-TA.txt" "master_ttf/Hack-DZSI-BoldItalic.ttf" "master_ttf/hinted/Hack-DZSI-BoldItalic.ttf"
+	then
+	    echo "Unable to execute ttfautohint on the Hack-DZSI-BoldItalic variant subset.  Build canceled." 1>&2
+	    exit 1
+fi
+echo "master_ttf/Hack-DZSI-BoldItalic.ttf subset - successful hinting with ttfautohint"
+
 echo " "
 
 # /////////////////////////////////////////////
@@ -346,7 +422,7 @@ fi
 
 # italic set
 if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$ITALIC_TTF"; then
-	echo "Failed to build $BOLD_WOFF from $ITALIC_TTF" 1>&2
+	echo "Failed to build $ITALIC_WOFF from $ITALIC_TTF" 1>&2
 	exit 1
 else
 	echo "Italic woff subset successfully built from $ITALIC_TTF"
@@ -359,6 +435,40 @@ if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$BOLDITALIC_TTF"; then
 else
 	echo "Bold Italic woff subset successfully built from $BOLDITALIC_TTF"
 fi
+
+# DZSI variants
+# regular set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_REGULAR_TTF"; then
+	echo "Failed to build $DZSI_REGULAR_WOFF from $DZSI_REGULAR_TTF." 1>&2
+	exit 1
+else
+	echo "DZSI Regular woff subset successfully built from $DZSI_REGULAR_TTF"
+fi
+
+# bold set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_BOLD_TTF"; then
+	echo "Failed to build $DZSI_BOLD_WOFF from $DZSI_BOLD_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Bold woff subset successfully built from $DZSI_BOLD_TTF"
+fi
+
+# italic set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_ITALIC_TTF"; then
+	echo "Failed to build $DZSI_ITALIC_WOFF from $DZSI_ITALIC_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Italic woff subset successfully built from $DZSI_ITALIC_TTF"
+fi
+
+# bold italic set
+if ! "$SFNTWOFF_BIN" -n $ZOPFLI_ITERATIONS "$TTF_BUILD/$DZSI_BOLDITALIC_TTF"; then
+	echo "Failed to build $DZSI_BOLDITALIC_WOFF from $DZSI_BOLDITALIC_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Bold Italic woff subset successfully built from $DZSI_BOLDITALIC_TTF"
+fi
+
 
 # /////////////////////////////////////////////
 #
@@ -402,6 +512,39 @@ else
 	echo "Bold Italic woff2 subset successfully built from $BOLDITALIC_TTF"
 fi
 
+# DZSI variants
+# regular set
+if ! "$WOFF2_BIN" "$TTF_BUILD/$DZSI_REGULAR_TTF"; then
+	echo "Failed to build woff2 subset from $DZSI_REGULAR_TTF." 1>&2
+	exit 1
+else
+	echo "DZSI Regular woff2 font subset successfully built from $DZSI_REGULAR_TTF"
+fi
+
+# bold set
+if ! "$WOFF2_BIN" "$TTF_BUILD/$DZSI_BOLD_TTF"; then
+	echo "Failed to build woff2 subset from $DZSI_BOLD_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Bold woff2 subset successfully built from $DZSI_BOLD_TTF"
+fi
+
+# italic set
+if ! "$WOFF2_BIN" "$TTF_BUILD/$DZSI_ITALIC_TTF"; then
+	echo "Failed to build woff2 subset from $DZSI_ITALIC_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Italic woff2 subset successfully built from $DZSI_ITALIC_TTF"
+fi
+
+# bold italic set
+if ! "$WOFF2_BIN" "$TTF_BUILD/$DZSI_BOLDITALIC_TTF"; then
+	echo "Failed to build woff2 subset from $DZSI_BOLDITALIC_TTF" 1>&2
+	exit 1
+else
+	echo "DZSI Bold Italic woff2 subset successfully built from $DZSI_BOLDITALIC_TTF"
+fi
+
 
 # //////////////////////////////////////////////
 #
@@ -425,6 +568,11 @@ mv "$TTF_BUILD/$BOLD_WOFF_PRE" "$WEB_BUILD/$BOLD_WOFF"
 mv "$TTF_BUILD/$ITALIC_WOFF_PRE" "$WEB_BUILD/$ITALIC_WOFF"
 mv "$TTF_BUILD/$BOLDITALIC_WOFF_PRE" "$WEB_BUILD/$BOLDITALIC_WOFF"
 
+mv "$TTF_BUILD/$DZSI_REGULAR_WOFF_PRE" "$WEB_BUILD/$DZSI_REGULAR_WOFF"
+mv "$TTF_BUILD/$DZSI_BOLD_WOFF_PRE" "$WEB_BUILD/$DZSI_BOLD_WOFF"
+mv "$TTF_BUILD/$DZSI_ITALIC_WOFF_PRE" "$WEB_BUILD/$DZSI_ITALIC_WOFF"
+mv "$TTF_BUILD/$DZSI_BOLDITALIC_WOFF_PRE" "$WEB_BUILD/$DZSI_BOLDITALIC_WOFF"
+
 if [ -f "$WEB_BUILD/$REGULAR_WOFF" ]; then
 	echo "Regular woff build path: $WEB_BUILD/$REGULAR_WOFF"
 fi
@@ -441,6 +589,22 @@ if [ -f "$WEB_BUILD/$BOLDITALIC_WOFF" ]; then
 	echo "Bold Italic woff build path: $WEB_BUILD/$BOLDITALIC_WOFF"
 fi
 
+if [ -f "$WEB_BUILD/$DZSI_REGULAR_WOFF" ]; then
+	echo "DZSI Regular woff build path: $WEB_BUILD/$DZSI_REGULAR_WOFF"
+fi
+
+if [ -f "$WEB_BUILD/$DZSI_BOLD_WOFF" ]; then
+	echo "DZSI Bold woff build path: $WEB_BUILD/$DZSI_BOLD_WOFF"
+fi
+
+if [ -f "$WEB_BUILD/$DZSI_ITALIC_WOFF" ]; then
+	echo "DZSI Italic woff build path: $WEB_BUILD/$DZSI_ITALIC_WOFF"
+fi
+
+if [ -f "$WEB_BUILD/$DZSI_BOLDITALIC_WOFF" ]; then
+	echo "DZSI Bold Italic woff build path: $WEB_BUILD/$DZSI_BOLDITALIC_WOFF"
+fi
+
 echo "Moving woff2 files to build directory..."
 
 # move woff files to appropriate build directory
@@ -448,6 +612,11 @@ mv "$TTF_BUILD/$REGULAR_WOFF2_PRE" "$WEB_BUILD/$REGULAR_WOFF2"
 mv "$TTF_BUILD/$BOLD_WOFF2_PRE" "$WEB_BUILD/$BOLD_WOFF2"
 mv "$TTF_BUILD/$ITALIC_WOFF2_PRE" "$WEB_BUILD/$ITALIC_WOFF2"
 mv "$TTF_BUILD/$BOLDITALIC_WOFF2_PRE" "$WEB_BUILD/$BOLDITALIC_WOFF2"
+
+mv "$TTF_BUILD/$DZSI_REGULAR_WOFF2_PRE" "$WEB_BUILD/$DZSI_REGULAR_WOFF2"
+mv "$TTF_BUILD/$DZSI_BOLD_WOFF2_PRE" "$WEB_BUILD/$DZSI_BOLD_WOFF2"
+mv "$TTF_BUILD/$DZSI_ITALIC_WOFF2_PRE" "$WEB_BUILD/$DZSI_ITALIC_WOFF2"
+mv "$TTF_BUILD/$DZSI_BOLDITALIC_WOFF2_PRE" "$WEB_BUILD/$DZSI_BOLDITALIC_WOFF2"
 
 if [ -f "$WEB_BUILD/$REGULAR_WOFF2" ]; then
 	echo "Regular woff2 subset build path: $WEB_BUILD/$REGULAR_WOFF2"
@@ -463,6 +632,22 @@ fi
 
 if [ -f "$WEB_BUILD/$BOLDITALIC_WOFF2" ]; then
 	echo "Bold Italic woff2 subset build path: $WEB_BUILD/$BOLDITALIC_WOFF2"
+fi
+
+if [ -f "$WEB_BUILD/$DZSI_REGULAR_WOFF2" ]; then
+	echo "DZSI Regular woff2 subset build path: $WEB_BUILD/$DZSI_REGULAR_WOFF2"
+fi
+
+if [ -f "$WEB_BUILD/$DZSI_BOLD_WOFF2" ]; then
+	echo "DZSI Bold woff2 subset build path: $WEB_BUILD/$DZSI_BOLD_WOFF2"
+fi
+
+if [ -f "$WEB_BUILD/$DZSI_ITALIC_WOFF2" ]; then
+	echo "DZSI Italic woff2 subset build path: $WEB_BUILD/$DZSI_ITALIC_WOFF2"
+fi
+
+if [ -f "$WEB_BUILD/$DZSI_BOLDITALIC_WOFF2" ]; then
+	echo "DZSI Bold Italic woff2 subset build path: $WEB_BUILD/$DZSI_BOLDITALIC_WOFF2"
 fi
 
 # //////////////////////////////////////////////
