@@ -135,8 +135,14 @@ fi
 # sfntwoff-zopfli installed
 if ! [ -f "$SFNTWOFF_BIN" ]
 	then
-	    echo "sfnt2woff-zopfli was not found on the path $SFNTWOFF_BIN.  Please install all build dependencies with 'make build-with-dependencies', then attempt your build again." 1>&2
-	    INSTALLFLAG=1
+		if ! which sfnt2woff-zopfli
+		then
+		    echo "sfnt2woff-zopfli was not found on the path $SFNTWOFF_BIN.  Please install all build dependencies with 'make build-with-dependencies', then attempt your build again." 1>&2
+		    INSTALLFLAG=1
+		else
+			SFNTWOFF_BIN="sfnt2woff-zopfli"
+			echo "sfnt2woff-zopfli executable identified"
+		fi
 else
 	echo "sfnt2woff-zopfli executable identified"
 fi
@@ -144,8 +150,14 @@ fi
 # woff2 installed
 if ! [ -f "$WOFF2_BIN" ]
 	then
-	    echo "woff2_compress was not found on the path $WOFF2_BIN.  Please install all build dependencies with 'make build-with-dependencies', then attempt your build again." 1>&2
-	    INSTALLFLAG=1
+		if ! which woff2_compress
+		then
+		    echo "woff2_compress was not found on the path $WOFF2_BIN.  Please install all build dependencies with 'make build-with-dependencies', then attempt your build again." 1>&2
+		    INSTALLFLAG=1
+		else
+			WOFF2_BIN="woff2_compress"
+			echo "woff2_compress executable identified"
+		fi
 else
 	echo "woff2_compress executable identified"
 fi

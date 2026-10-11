@@ -88,6 +88,8 @@ fi
 
 if [ -f "$WOFF2_BIN" ]; then
 	echo "Beginning web font build with $WOFF2_BIN"
+elif which woff2_compress; then
+	WOFF2_BIN="woff2_compress"
 else
 	echo "Unable to locate woff2_compress on path $WOFF2_BIN. Please attempt a manual install of this build dependency and then repeat your build attempt." 1>&2
 	exit 1
